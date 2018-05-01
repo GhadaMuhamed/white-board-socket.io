@@ -5,7 +5,10 @@ var usersSchema=new mongoose.Schema({
     unique:true
     },
     type : Boolean,
-    password: String
+    image:String,
+    password: String,
+    rooms:{ type : Array , "default" : [] },
+  	snapshots:{ type : Array , "default" : [] }
 },{collection:'Users'});
 usersSchema.index({username: 1}, {unique: true});
 module.exports=mongoose.model('Users',usersSchema);
