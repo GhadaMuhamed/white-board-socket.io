@@ -4,11 +4,11 @@ const config=require('../config.js');
 var request = require('request');
 var users=require('../Models/Users.js');
 const router = express.Router();
-router.get('/:name/:password',(req,res)=>{
-  var name=req.params.name;
+router.get('/:email/:password',(req,res)=>{
+  var email=req.params.email;
   var password=req.params.password;
   users.find({
-    username:name,
+    email:email,
     password:password
   },{_id:0,username:0,rooms:0,snapshots:0,iamge:0,password:0},
   function(err,data){
@@ -17,7 +17,7 @@ router.get('/:name/:password',(req,res)=>{
     if(data[0]){
     var  type=data[0].type;
       var body={
-        name:name
+        email:email
       };
       JWT.sign({body},config.secret,(err,token)=>{
         res.json({
