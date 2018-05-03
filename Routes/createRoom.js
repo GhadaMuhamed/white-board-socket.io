@@ -5,7 +5,7 @@ const isTeacher = require('../server/utils/Functions.js').isTeacher;
 const addLine = require('../server/utils/Functions.js').addLine;
 var token=require('../token.js');
 router.get('/:roomName',token,function(req,res){
-    var username = req.tok.body.username;
+    var username = req.tok.username;
     var name = req.params.roomName;
     isTeacher(username,(flag) => {
       if (flag) {
