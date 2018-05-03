@@ -16,9 +16,9 @@ var storage = multer.diskStorage({
 });
 var upload = multer({storage: storage});
 router.post('',token, upload.single('image'),(req,res)=>{
-  var email=req.tok.body.email;
+  var username=req.tok.username;
   console.log(req.file);
-  users.update({email:email},    { image:  req.file.path } ,function(err,data){
+  users.update({username:username},    { image:  req.file.path } ,function(err,data){
     if(err)throw err;
     res.json({'message': 'File uploaded successfully'});
   });
