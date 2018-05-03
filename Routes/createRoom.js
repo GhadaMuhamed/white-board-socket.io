@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 const isFound = require('../server/utils/Functions.js').isFound;
 const createRoom = require('../server/utils/Functions.js').createRoom;
-var token=require('../token.js');
-router.post('/create-room/:roomName',token,function(req,res){
+var authenticate=require('../token.js');
+router.post('/create-room/:roomName',function(req,res){
     var user = req.tok.body.name;
     var name = req.params.roomName;
     isTeacher(user,(flag) => {
