@@ -1,35 +1,27 @@
 var roomModel = require('../../Models/roomModel.js');
 var userModel = require('../../Models/Users.js');
 var mongoose = require('../../db.js')
-var isFound = (params) => {
-  roomModel.find({"roomName" : params.name , "Creator" : params.room},function(err,data){
-      if (err) throw err;
-      if (data.length == 0)  return false;
-      else return true;
-  });
-}
-var createRoom = (params,callback) => {
+var createRoom = (name,callback) => {
   var db=mongoose.connection;
-  db.collections.currentRooms.insert({"roomName" : params.name , "Creator" : params.room},function(err){
-    if (err) throw err;
-    callback();
+  db.collections.currentRooms.insert({"roomName" : name,"open":true},function(err){
+    callback(err);
   });
 }
-var isTeacher = (user,callback) => {
-  userModel.find({"username" : user},{"type":1},(err,data)=>{
+var isTeacher = (username,callback) => {
+  userModel.find({"username" : username},{"type":1},(err,data)=>{
+    if (err) throw err;
     if (data.length > 0  && data[0].type)
         callback(true);
     else callback(false);
   })
 }
 var getRoomData = (room,callback) => {
-  roomModel.find({"roomName" : room }, { "board" : 1,"_id":0}, function(err,data){
+  roomModel.find({"roomName" : room }, { "board" : 1, "message" : 1 ,"_id":0}, function(err,data){
       if (err) throw err;
       callback(data) ;
   });
 }
 var addLine = (data , room) => {
-  room = "math";
   data = {
     "x1" : 1,
       "x2" : 1,
@@ -49,10 +41,23 @@ var findRoom = (room,callback) => {
     else callback(true);
   })
 }
-var addRoomToUser = (user,room,callback) => {
-  userModel.update({ "username": user }, { "$addToSet": { "rooms": room }}, (err) =>{
+var addRoomToUser = (username,room,callback) => {
+  userModel.update({ "username": username }, { "$addToSet": { "rooms": room }}, (err) =>{
     if (err) throw err;
     callback();
   });
 }
-module.exports = {isFound,createRoom,getRoomData,addLine,findRoom,addRoomToUser}
+var closeRoom = (room,callback) => {
+  roomModel.findOneAndUpdate({ "roomName": room }, { "$set": { "open": false }}, (err,data) =>{
+    if (err) throw err;
+    if (data.length == 0)
+      callback(true);
+    else callback(false);
+  });
+}
+var addMsg = (data, room) => {
+  roomModel.update({ "roomName": room }, { "$push": { "message": data }}, (err) =>{
+    if (err) throw err;
+  });
+}
+module.exports = {createRoom,getRoomData,addLine,findRoom,addRoomToUser,isTeacher,closeRoom}

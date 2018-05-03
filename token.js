@@ -11,10 +11,11 @@ var verifytok=function verifyToken(req,res,next){
   if(err){
    res.status(401).send('Unauthorized');
   }else{
+    console.log(data);
     req.tok=data;
+    next();
   }
 });
-next();
   }
   else{
     res.sendStatus(403);

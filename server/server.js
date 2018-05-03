@@ -11,6 +11,7 @@ const createRoom = require('../Routes/createRoom.js');
 const rooms = require('../Routes/rooms.js');
 const signup = require('../Routes/signup.js');
 const login = require('../Routes/login.js');
+const closeRoom = require('../Routes/closeRoom.js');
 
 var app = express();
 var server = http.createServer(app);
@@ -20,6 +21,8 @@ app.use('/CreateRoom',createRoom);
 app.use('/room',rooms);
 app.use('/signup',signup);
 app.use('/login',login);
+app.use('/closeRoom',closeRoom);
+
 app.use(express.static(publicPath));
 let numberOfOnlineUsers = 0;
 
@@ -37,8 +40,10 @@ io.on('connection', (socket) => {
   });
 
   socket.on('new-message', (data) => {
-    console.log("Message Received: " +  data.message);
-      io.to(map.get(socket.id)).emit('newMessage', data);
+      var curRoom = map.get(socket.id);
+      addMsg(data,curRoom)
+      console.log("Message Received: " +  data.message);
+      io.to(curRoom).emit('newMessage', data);
   });
   socket.on('new-line', (data) => {
       console.log("Message Received: " +  data.message);
