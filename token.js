@@ -1,6 +1,7 @@
 const express=require('express');
 const JWT=require('jsonwebtoken');
 const config=require('./config.js');
+var users=require('../Models/Users.js');
 var verifytok=function verifyToken(req,res,next){
   var bearerHeader=req.headers.authorization;
   if(typeof bearerHeader !=='undefined'){
@@ -11,10 +12,17 @@ var verifytok=function verifyToken(req,res,next){
   if(err){
    res.status(401).send('Unauthorized');
   }else{
-    req.tok=data;
+    var name=data.body.username;
+    users.find({username:username},{_id:0,password:0,snapshots:0,rooms:0,type:0,image:0},function(err,data){
+      if(err)throw err;
+      if(data[0]){
+          req.tok=data;
+          next();
+        }
+      else  res.status(401).send('Unauthorized');
+    });
   }
 });
-next();
   }
   else{
     res.sendStatus(403);
