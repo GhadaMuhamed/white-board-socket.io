@@ -8,11 +8,11 @@ var token=require('../token.js');
 var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 router.post('',token,(req,res)=>{
-  var email=req.tok.body.email;
-  console.log(email);
-  users.update({email:email},   { $push: { snapshots: req.body.snapshot } },function(err,data){
+  var username=req.tok.username;
+  console.log(username);
+  users.update({username:username},   { $push: { snapshots: req.body.snapshot } },function(err,data){
     if(err)throw err;
-    res.end("ok");
+    res.json({"message":"ok"});
   });
 });
 module.exports=router;
