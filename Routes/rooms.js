@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 var findRoom= require('../server/utils/Functions.js').findRoom;
 var getRoomData= require('../server/utils/Functions.js').getRoomData;
-var authenticate = require('../token.js');
+var token = require('../token.js');
 var addRoomToUser = require('../server/utils/Functions.js').addRoomToUser;
-router.get('/:roomName',function(req,res){
+router.get('/:roomName',token,function(req,res){
   var room = req.params.roomName;
   var user = "dodo";//req.user"";
   findRoom(room, (flag) => {

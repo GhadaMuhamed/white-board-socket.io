@@ -9,12 +9,17 @@ const getRoomData = require('./utils/Functions.js').getRoomData;
 const addLine = require('./utils/Functions.js').addLine;
 const createRoom = require('../Routes/createRoom.js');
 const rooms = require('../Routes/rooms.js');
+const signup = require('../Routes/signup.js');
+const login = require('../Routes/login.js');
+
 var app = express();
 var server = http.createServer(app);
 var io = socketIO(server);
 map = new Map();
 app.use('/CreateRoom',createRoom);
 app.use('/room',rooms);
+app.use('/signup',signup);
+app.use('/login',login);
 app.use(express.static(publicPath));
 let numberOfOnlineUsers = 0;
 
