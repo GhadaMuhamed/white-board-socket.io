@@ -9,7 +9,7 @@ router.get('/:roomName',token,function(req,res){
   var username = req.tok.username;
   findRoom(room, (flag) => {
     if (!flag)
-      res.status(404).send("Not Found");
+      res.json({"message" : "There isn't a room with that name"});
   });
 
   getRoomData(room,(data) => {

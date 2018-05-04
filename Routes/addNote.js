@@ -1,7 +1,6 @@
 const express=require('express');
 const JWT=require('jsonwebtoken');
 const config=require('../config.js');
-var request = require('request');
 var notesUser=require('../Models/notesUser.js');
 const router = express.Router();
 var token=require('../token.js');

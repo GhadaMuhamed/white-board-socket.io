@@ -1,7 +1,6 @@
 const express=require('express');
 const JWT=require('jsonwebtoken');
 const config=require('../config.js');
-var request = require('request');
 var users=require('../Models/Users.js');
 const router = express.Router();
 router.get('/:name/:password',(req,res)=>{

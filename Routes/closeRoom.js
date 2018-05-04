@@ -10,11 +10,11 @@ router.get('/:roomName',token,function(req,res){
       if (flag) {
         closeRoom(name, (err)=> {
           if (err)
-            res.status(404).end();
-          else res.status(200).end();
+            res.json({"message" : "There isn't a room with that name"});
+          else res.json({"message" : "The room is closed"});
         });
       }
-      else res.status(403).end();
+      else res.json({"message" : "This user isn't authorized to close room"});
     })
 
 })

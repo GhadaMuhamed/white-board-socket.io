@@ -13,16 +13,39 @@ const signup = require('../Routes/signup.js');
 const login = require('../Routes/login.js');
 const closeRoom = require('../Routes/closeRoom.js');
 const uploadImage = require('../Routes/addimage.js');
+///////////////////////////////
+const profileInfo=require('../Routes/profile.js');
+const getRooms=require('../Routes/getRooms.js');
+const addSnapshot=require('../Routes/addSnapshot.js');
+const addNote=require('../Routes/addNote.js');
+const getNote=require('../Routes/getNote.js');
+const addimage=require('../Routes/addimage.js');
+
+//////////////////////////
 var app = express();
 var server = http.createServer(app);
 var io = socketIO(server);
 map = new Map();
+app.all('*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 app.use('/CreateRoom',createRoom);
 app.use('/room',rooms);
 app.use('/signup',signup);
 app.use('/login',login);
 app.use('/closeRoom',closeRoom);
 app.use('/uploadImage',uploadImage);
+app.use('/profileInfo',profileInfo);
+app.use('/getRooms',getRooms);
+app.use('/addSnapshot',addSnapshot);
+app.use('/addimage',addimage);
+app.use('/addNote',addNote);
+app.use('/getNote',getNote);
+app.use('/uploads',express.static('uploads'));
+
 app.use(express.static(publicPath));
 let numberOfOnlineUsers = 0;
 

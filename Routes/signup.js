@@ -1,6 +1,5 @@
 const express=require('express');
 const config=require('../config.js');
-var request = require('request');
 var users=require('../Models/Users.js');
 const router = express.Router();
 var bodyParser = require('body-parser');
