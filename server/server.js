@@ -12,7 +12,7 @@ const rooms = require('../Routes/rooms.js');
 const signup = require('../Routes/signup.js');
 const login = require('../Routes/login.js');
 const closeRoom = require('../Routes/closeRoom.js');
-
+const uploadImage = require('../Routes/addimage.js');
 var app = express();
 var server = http.createServer(app);
 var io = socketIO(server);
@@ -22,7 +22,7 @@ app.use('/room',rooms);
 app.use('/signup',signup);
 app.use('/login',login);
 app.use('/closeRoom',closeRoom);
-
+app.use('/uploadImage',uploadImage);
 app.use(express.static(publicPath));
 let numberOfOnlineUsers = 0;
 
