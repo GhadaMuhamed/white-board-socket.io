@@ -7,19 +7,19 @@ var users=require('../Models/Users.js');
 const router = express.Router();
 var token=require('../token.js');
 router.get('',token,(req,res)=>{
-  var email=req.tok.body.email;
-  console.log(email);
-   findrooms(email,findrommsforuser,res);
+  var username=req.tok.username;
+  console.log(username);
+   findrooms(username,findrommsforuser,res);
 });
-var findrooms = function(email,callback,res) {
+var findrooms = function(username,callback,res) {
     rooms.find({},{roomName:1,_id:0},function(err,data){
       if(err)throw err;
       console.log("data"+data);
-      callback(email,data,res);
+      callback(username,data,res);
     });
 }
-var findrommsforuser = function(email,data,res) {
-    users.find({email:email},{_id:0,username:0,type:0,snapshots:0,image:0,password:0,email:0},function(err,data1){
+var findrommsforuser = function(username,data,res) {
+    users.find({username:username},{_id:0,type:0,snapshots:0,image:0,password:0},function(err,data1){
       if(err)throw err;
       var rooms=[];
       console.log("dataforuser"+data1);

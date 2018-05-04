@@ -6,7 +6,7 @@ var token = require('../token.js');
 var addRoomToUser = require('../server/utils/Functions.js').addRoomToUser;
 router.get('/:roomName',token,function(req,res){
   var room = req.params.roomName;
-  var username = req.tok.body.username;
+  var username = req.tok.username;
   findRoom(room, (flag) => {
     if (!flag)
       res.status(404).send("Not Found");

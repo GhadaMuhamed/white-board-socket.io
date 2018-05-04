@@ -9,10 +9,10 @@ var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 router.post('/:roomName',token,(req,res)=>{
   var roomName=req.params.roomName;
-  var email=req.tok.body.email;
+  var username=req.tok.username;
   var begpoint=req.body.begpoint;
   var endpoint=req.body.endpoint;
-  console.log(email);
+  console.log(username);
   var note={
     width:req.body.width,
     color:req.body.color,
@@ -20,7 +20,7 @@ router.post('/:roomName',token,(req,res)=>{
     endpoint:endpoint
   };
   console.log(note);
-  notesUser.update({email:email,roomName:roomName},{ $push: { notes: note }},{upsert: true} ,function(err,data){
+  notesUser.update({username:username,roomName:roomName},{ $push: { notes: note }},{upsert: true} ,function(err,data){
     if(err)throw err;
     res.json({"message":"added well"});
   });

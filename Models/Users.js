@@ -9,7 +9,6 @@ var usersSchema=new mongoose.Schema({
     },
     rooms:{ type : Array , "default" : [] },
   	snapshots:{ type : Array , "default" : [] },
-    notes:{ type : Array , "default" : [] }
 },{collection:'Users'});
 usersSchema.index({username: 1}, {unique: true});
 module.exports=mongoose.model('Users',usersSchema);
