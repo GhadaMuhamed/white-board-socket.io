@@ -1,6 +1,7 @@
 const express=require('express');
 const JWT=require('jsonwebtoken');
 const config=require('../config.js');
+var request = require('request');
 var rooms=require('../Models/roomModel.js');
 var users=require('../Models/Users.js');
 const router = express.Router();
@@ -31,7 +32,8 @@ var findrommsforuser = function(username,data,res) {
             console.log(rooms);
           }
       }
-    res.json(rooms);
+    res.json("message":"Authorized"
+      ,rooms);
     });
 };
 module.exports=router;
