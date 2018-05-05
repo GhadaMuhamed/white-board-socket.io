@@ -10,7 +10,7 @@ var verifytok=function verifyToken(req,res,next){
    var authorization;
    JWT.verify(token,config.secret,function(err,data){
   if(err){
-   res.status(401).send('Unauthorized');
+    res.json({'message':'Unauthorized'});
   }else{
     var username=data.username;
     users.find({username:username},{_id:0,password:0,snapshots:0,rooms:0,type:0,image:0},function(err,data){
@@ -19,13 +19,13 @@ var verifytok=function verifyToken(req,res,next){
           req.tok=data[0];
           next();
         }
-      else  res.status(401).send('Unauthorized');
+      else  res.json({'message':'Unauthorized'});
     });
   }
 });
   }
   else{
-    res.sendStatus(403);
+  res.json({'message':'no token'});
   }
 }
 module.exports=verifytok;
