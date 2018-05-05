@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var findRoom= require('../server/utils/Functions.js').findRoom;
-var getRoomData= require('../server/utils/Functions.js').getRoomData;
 var token = require('../token.js');
-var addRoomToUser = require('../server/utils/Functions.js').addRoomToUser;
+var roomModel=require('../Models/roomModel.js');
 router.get('/:roomName',token,function(req,res){
   var room = req.params.roomName;
   var username = req.tok.username;
@@ -11,12 +10,11 @@ router.get('/:roomName',token,function(req,res){
     if (!flag)
       res.json({"message" : "There isn't a room with that name"});
   });
+  roomModel.find({"roomName" : room }, { "board" : 1, "message" : 0 ,"_id":0}, function(err,data){
+      if (err) throw err;
+      req.json(data);
+  });
 
-  getRoomData(room,(data) => {
-    addRoomToUser(username,room,() => {
-      res.status(200).json(data);
-    })
-  })
 })
 
 module.exports = router;
