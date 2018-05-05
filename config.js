@@ -1,4 +1,4 @@
 module.exports = {
-  'db'     : 'mongodb://localhost:27017/MP3',
+  'db'     : 'mongodb:elearning@localhost:27017/elearning?authMechanism=MONGODB-CR',
     'secret' : 'dsjdsdlaslpdwdwwpoiuytqwecvnuht'
 }
