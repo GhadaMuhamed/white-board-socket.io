@@ -1,6 +1,7 @@
 const express=require('express');
 const JWT=require('jsonwebtoken');
 const config=require('../config.js');
+var request = require('request');
 var users=require('../Models/Users.js');
 const router = express.Router();
 router.get('/:name/:password',(req,res)=>{
@@ -12,7 +13,6 @@ router.get('/:name/:password',(req,res)=>{
   },{_id:0,image:0,rooms:0,snapshots:0,password:0},
   function(err,data){
     if(err) throw err;
-    console.log(data[0]);
     if(data[0]){
       var type=data[0].type;
       var body={
@@ -20,13 +20,14 @@ router.get('/:name/:password',(req,res)=>{
       };
       JWT.sign(body,config.secret,(err,token)=>{
         res.json({
+			"message":"found",
           token,
           type
         });
       });
     }
     else
-      res.status(401).send('Unauthorized');
+      res.json({"message":"Unauthorized"});
   });
 });
 module.exports=router;
