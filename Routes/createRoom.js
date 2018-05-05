@@ -15,7 +15,7 @@ router.get('/:roomName',token,function(req,res){
             else res.json({"message" : "The room is created"});
         });
       }
-      else res.json({"message" : "TThis user isn't authorized to close room"});
+      else res.json({"message" : "This user isn't authorized to create room"});
     })
 
 })
