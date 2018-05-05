@@ -1,5 +1,6 @@
 const express=require('express');
 const config=require('../config.js');
+var request = require('request');
 var users=require('../Models/Users.js');
 const router = express.Router();
 var bodyParser = require('body-parser');
@@ -15,7 +16,7 @@ router.post('',(req,res)=>{
     }
     else{
       users.create({
-        username:req.body.name,
+        username:req.body.username,
         password:req.body.password,
         type:false
       },function(err,data){
